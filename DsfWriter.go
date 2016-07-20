@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"encoding/binary"
 	"fmt"
+	"io"
 	"os"
 )
 
@@ -105,6 +106,13 @@ func (d *DSF) Info() {
 	fmt.Printf("  Padded PDM data: %d bytes\n", d.PaddedDataSize())
 }
 
+func closeFile(c io.Closer) {
+	err := c.Close()
+	if err != nil {
+		fmt.Printf("ERR: %s\n", err)
+	}
+}
+
 // WriteDSF writes out a DSF file.
 // It returns an error upon failure.
 func (d *DSF) WriteDSF(dsfFilename string) error {
@@ -112,7 +120,7 @@ func (d *DSF) WriteDSF(dsfFilename string) error {
 	if nil != err {
 		return fmt.Errorf("Failed to create '%s': %v", dsfFilename, err)
 	}
-	defer f.Close()
+	defer closeFile(f)
 
 	err = binary.Write(f, binary.LittleEndian, d.ChunkDSD())
 	if nil != err {
@@ -139,7 +147,7 @@ func (d *DSF) WriteDSF(dsfFilename string) error {
 			return fmt.Errorf("Failed to write: %v", err)
 		}
 	}
-	w.Flush()
+	_ = w.Flush()
 
 	return nil
 }
