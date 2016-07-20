@@ -12,7 +12,7 @@ import (
 	"io/ioutil"
 	"os"
 
-        "github.com/IvoBCD/dsf/dsf"
+        "github.com/IvoBCD/dsf"
 )
 
 func main() {

@@ -1,4 +1,4 @@
-// Package dsf implements writing of audio files in the DSF (DSD Stream File) format
+// Package dsf implements writing of audio files in the DSF (DSD Stream File) format.
 package dsf
 
 import (
@@ -13,7 +13,7 @@ const dsfChunkSizeDSD uint64 = 28
 const dsfChunkSizeFMT uint64 = 52
 const dsfChunkSizeDATA uint64 = 12
 
-// DSD chunk
+// DSFChunkDSD represents a DSD chunk.
 type DSFChunkDSD struct {
 	Header        [4]uint8
 	ChunkSize     uint64
@@ -21,7 +21,7 @@ type DSFChunkDSD struct {
 	MetaDataPtr   uint64
 }
 
-// FMT chunk
+// DSFChunkFMT represents a FMT chunk.
 type DSFChunkFMT struct {
 	Header        [4]uint8
 	ChunkSize     uint64
@@ -36,13 +36,13 @@ type DSFChunkFMT struct {
 	Reserved      uint32
 }
 
-// DATA chunk header
+// DSFChunkDATA represents a DATA chunk header.
 type DSFChunkDATA struct {
 	Header    [4]uint8
 	ChunkSize uint64
 }
 
-// Direct Stream File (DSF)
+// DSF represents a DSD Stream File (DSF).
 type DSF struct {
 	PdmData []byte
 	BitRate int

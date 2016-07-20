@@ -1,8 +1,8 @@
 # dsf
 
 [![Build Status](https://drone.io/github.com/IvoBCD/dsf/status.png)](https://drone.io/github.com/IvoBCD/dsf/latest)
-[![GoDoc](https://godoc.org/github.com/IvoBCD/dsf/dsf?status.svg)](https://godoc.org/github.com/IvoBCD/dsf/dsf)
-[![Go Report Card](https://goreportcard.com/badge/github.com/IvoBCD/dsf/dsf)](https://goreportcard.com/report/github.com/IvoBCD/dsf/dsf)
+[![GoDoc](https://godoc.org/github.com/IvoBCD/dsf?status.svg)](https://godoc.org/github.com/IvoBCD/dsf)
+[![Go Report Card](https://goreportcard.com/badge/github.com/IvoBCD/dsf)](https://goreportcard.com/report/github.com/IvoBCD/dsf)
 
 Golang package for writing audio files in the DSF (DSD Stream File) format.
 
@@ -10,10 +10,10 @@ Golang package for writing audio files in the DSF (DSD Stream File) format.
 
 ```
 package dsf
-    import "github.com/IvoBCD/dsf/dsf"
+    import "github.com/IvoBCD/dsf"
 
     Package dsf implements writing of audio files in the DSF (DSD Stream
-    File) format
+    File) format.
 
 TYPES
 
@@ -21,7 +21,7 @@ type DSF struct {
     PdmData []byte
     BitRate int
 }
-    Direct Stream File (DSF)
+    DSF represents a DSD Stream File (DSF).
 
 func NewDSF(pdmData []byte, bitRate int) *DSF
     NewDSF creates a new DSF structure.
@@ -48,7 +48,7 @@ type DSFChunkDATA struct {
     Header    [4]uint8
     ChunkSize uint64
 }
-    DATA chunk header
+    DSFChunkDATA represents a DATA chunk header.
 
 type DSFChunkDSD struct {
     Header        [4]uint8
@@ -56,7 +56,7 @@ type DSFChunkDSD struct {
     TotalFileSize uint64
     MetaDataPtr   uint64
 }
-    DSD chunk
+    DSFChunkDSD represents a DSD chunk.
 
 type DSFChunkFMT struct {
     Header        [4]uint8
@@ -71,5 +71,11 @@ type DSFChunkFMT struct {
     BlockSize     uint32
     Reserved      uint32
 }
-    FMT chunk
+    DSFChunkFMT represents a FMT chunk.
+
+SUBDIRECTORIES
+
+	cmd
+	dsf
+
 ```
