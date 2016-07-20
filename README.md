@@ -1,6 +1,8 @@
 # dsf
 
 [![Build Status](https://drone.io/github.com/IvoBCD/dsf/status.png)](https://drone.io/github.com/IvoBCD/dsf/latest)
+[![GoDoc](https://godoc.org/github.com/IvoBCD/dsf/dsf?status.svg)](https://godoc.org/github.com/IvoBCD/dsf/dsf)
+[![Go Report Card](https://goreportcard.com/badge/github.com/IvoBCD/dsf/dsf)](https://goreportcard.com/report/github.com/IvoBCD/dsf/dsf)
 
 Golang package for writing DSF (DSD Stream File).
 
