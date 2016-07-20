@@ -85,17 +85,16 @@ func (d *DSF) PaddedDataSize() uint64 {
 	return (uint64(len(d.PdmData)-1) | uint64(dsfBlockSize-1)) + 1
 }
 
-func (d *DSF) WriteDSF(dsfFilename string) error {
-	paddedDataSize := d.PaddedDataSize()
-	totalSize := paddedDataSize + dsfChunkSizeDSD + dsfChunkSizeFMT + dsfChunkSizeDATA
+func (d *DSF) Info() {
 	duration := float64(len(d.PdmData)) * 8.0 / float64(d.BitRate)
 	fmt.Printf("       PDM stream: %d bits (%d bytes) @ %d bits / second\n",
 		len(d.PdmData)*8, len(d.PdmData), d.BitRate)
 	fmt.Printf("         Duration: %.2f seconds\n", duration)
-	fmt.Printf("  DSF output file: %s bytes\n", dsfFilename)
 	fmt.Printf("Unpadded PDM data: %d bytes\n", len(d.PdmData))
-	fmt.Printf("  Padded PDM data: %d bytes\n", paddedDataSize)
-	fmt.Printf("         DSF size: %d bytes\n", totalSize)
+	fmt.Printf("  Padded PDM data: %d bytes\n", d.PaddedDataSize())
+}
+
+func (d *DSF) WriteDSF(dsfFilename string) error {
 	f, err := os.Create(dsfFilename)
 	if nil != err {
 		return fmt.Errorf("Failed to create '%s': %v", dsfFilename, err)
@@ -119,8 +118,9 @@ func (d *DSF) WriteDSF(dsfFilename string) error {
 	if nil != err {
 		return fmt.Errorf("Failed to write: %v", err)
 	}
-	if paddedDataSize > uint64(len(d.PdmData)) {
-		padding := make([]byte, int(paddedDataSize)-len(d.PdmData))
+	padLen := int(d.PaddedDataSize()) - len(d.PdmData)
+	if padLen > 0 {
+		padding := make([]byte, padLen)
 		_, err = w.Write(padding)
 		if nil != err {
 			return fmt.Errorf("Failed to write: %v", err)

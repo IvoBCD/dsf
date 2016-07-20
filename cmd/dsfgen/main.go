@@ -37,6 +37,7 @@ func main() {
 		os.Exit(1)
 	}
 	d := dsf.NewDSF(pdmData, pdmBitrate)
+	d.Info()
 	err = d.WriteDSF(outputPath)
 	if nil != err {
 		fmt.Printf("ERROR: %v\n", err)
