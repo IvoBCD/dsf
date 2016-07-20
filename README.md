@@ -6,6 +6,8 @@
 
 Golang package for writing audio files in the DSF (DSD Stream File) format.
 
+OBSOLETE: Please use [github.com/snmoore/go/audio](https://godoc.org/github.com/snmoore/go/audio) instead.
+
 ## godoc documentation
 
 ```
