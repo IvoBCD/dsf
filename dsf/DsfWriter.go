@@ -1,3 +1,4 @@
+// Package dsf implements writing DSF (DSD Stream File).
 package dsf
 
 import (
@@ -43,10 +44,12 @@ type DSF struct {
 	BitRate int
 }
 
+// NewDSF creates a new DSF structure.
 func NewDSF(pdmData []byte, bitRate int) *DSF {
 	return &DSF{PdmData: pdmData, BitRate: bitRate}
 }
 
+// ChunkFMT yields a DSF FMT chunk.
 func (d *DSF) ChunkFMT() *DSFChunkFMT {
 	return &DSFChunkFMT{
 		Header:        [4]byte{'f', 'm', 't', ' '},
@@ -64,6 +67,7 @@ func (d *DSF) ChunkFMT() *DSFChunkFMT {
 
 }
 
+// ChunkDSD yields a DSF DSD chunk.
 func (d *DSF) ChunkDSD() *DSFChunkDSD {
 	totalSize := d.PaddedDataSize() + dsfChunkSizeDSD + dsfChunkSizeFMT + dsfChunkSizeDATA
 	return &DSFChunkDSD{
@@ -74,6 +78,7 @@ func (d *DSF) ChunkDSD() *DSFChunkDSD {
 	}
 }
 
+// ChunkDATA yields a DSF DATA chunk header.
 func (d *DSF) ChunkDATA() *DSFChunkDATA {
 	return &DSFChunkDATA{
 		Header:    [4]byte{'d', 'a', 't', 'a'},
@@ -81,10 +86,12 @@ func (d *DSF) ChunkDATA() *DSFChunkDATA {
 	}
 }
 
+// ChunkDATA returns the padded PDM data size.
 func (d *DSF) PaddedDataSize() uint64 {
 	return (uint64(len(d.PdmData)-1) | uint64(dsfBlockSize-1)) + 1
 }
 
+// Info reports information about the DSF object.
 func (d *DSF) Info() {
 	duration := float64(len(d.PdmData)) * 8.0 / float64(d.BitRate)
 	fmt.Printf("       PDM stream: %d bits (%d bytes) @ %d bits / second\n",
@@ -94,6 +101,8 @@ func (d *DSF) Info() {
 	fmt.Printf("  Padded PDM data: %d bytes\n", d.PaddedDataSize())
 }
 
+// WriteDSF writes out a DSF file.
+// It returns an error upon failure.
 func (d *DSF) WriteDSF(dsfFilename string) error {
 	f, err := os.Create(dsfFilename)
 	if nil != err {
