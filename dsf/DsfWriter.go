@@ -1,4 +1,4 @@
-// Package dsf implements writing DSF (DSD Stream File).
+// Package dsf implements writing of audio files in the DSF (DSD Stream File) format
 package dsf
 
 import (
@@ -13,6 +13,7 @@ const dsfChunkSizeDSD uint64 = 28
 const dsfChunkSizeFMT uint64 = 52
 const dsfChunkSizeDATA uint64 = 12
 
+// DSD chunk
 type DSFChunkDSD struct {
 	Header        [4]uint8
 	ChunkSize     uint64
@@ -20,6 +21,7 @@ type DSFChunkDSD struct {
 	MetaDataPtr   uint64
 }
 
+// FMT chunk
 type DSFChunkFMT struct {
 	Header        [4]uint8
 	ChunkSize     uint64
@@ -34,11 +36,13 @@ type DSFChunkFMT struct {
 	Reserved      uint32
 }
 
+// DATA chunk header
 type DSFChunkDATA struct {
 	Header    [4]uint8
 	ChunkSize uint64
 }
 
+// Direct Stream File (DSF)
 type DSF struct {
 	PdmData []byte
 	BitRate int
@@ -86,7 +90,7 @@ func (d *DSF) ChunkDATA() *DSFChunkDATA {
 	}
 }
 
-// ChunkDATA returns the padded PDM data size.
+// PaddedDataSize returns the padded PDM data size.
 func (d *DSF) PaddedDataSize() uint64 {
 	return (uint64(len(d.PdmData)-1) | uint64(dsfBlockSize-1)) + 1
 }
