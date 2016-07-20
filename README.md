@@ -1,5 +1,7 @@
 # dsf
 
+[![Build Status](https://drone.io/github.com/IvoBCD/dsf/status.png)](https://drone.io/github.com/IvoBCD/dsf/latest)
+
 Golang package for writing DSF (DSD Stream File).
 
 ## godoc documentation
